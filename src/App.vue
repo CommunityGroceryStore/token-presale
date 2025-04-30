@@ -15,8 +15,7 @@ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { networks } from '@/lib/wagmi/config'
 import Main from './components/Main.vue'
 
-// 1. Get projectId from https://cloud.reown.com
-const projectId = '2700cce7e6e957d1ed0863a0bb3ea2e1'
+const projectId = import.meta.env.REOWN_PROJECT_ID ?? ''
 
 // 2. Create a metadata object - optional
 const metadata = {
