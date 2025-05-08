@@ -31,24 +31,34 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
-      <div class="grid gap-8 md:grid-cols-2">
+      <div class="grid gap-8 lg:grid-cols-2">
         <!-- Left Column - Info -->
         <div class="space-y-6">
           <div class="flex items-center gap-4">
             <div>
-              <h2 class="text-4xl font-bold text-green-900">Community</h2>
+              <h2
+                class="text-2xl md:text-3xl lg:text-4xl font-bold text-green-900"
+              >
+                Community
+              </h2>
               <div class="flex items-center">
-                <span class="text-4xl font-bold text-green-900">Grocery</span>
                 <span
-                  class="ml-2 rounded bg-green-900 px-3 py-1 text-xl font-bold text-white"
+                  class="text-2xl md:text-3xl lg:text-4xl font-bold text-green-900"
+                  >Grocery</span
+                >
+                <span
+                  class="ml-2 rounded bg-green-900 px-3 py-1 text-md md:text-lg lg:text-xl font-bold text-white"
                   >Store</span
                 >
               </div>
             </div>
             <div class="h-16 w-1 bg-green-900" />
             <div>
-              <h3 class="text-2xl font-bold text-green-900">Crypto</h3>
-              <h3 class="text-2xl font-bold text-green-900">Token Presale</h3>
+              <h3 class="text-xl md:text-2xl font-bold text-green-900">
+                Crypto
+                <br />
+                Token Presale
+              </h3>
             </div>
           </div>
 
@@ -99,66 +109,68 @@
             </Button>
             <Button
               variant="outline"
-              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-green-50 text-green-900 rounded-full"
+              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-stone-200/50 text-green-900 rounded-full"
             >
               Strategy
               <ArrowUpRight class="h-4 w-4" />
             </Button>
             <Button
               variant="outline"
-              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-green-50 text-green-900 rounded-full"
+              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-stone-200/50 text-green-900 rounded-full"
             >
               Incentives
               <ArrowUpRight class="h-4 w-4" />
             </Button>
             <Button
               variant="outline"
-              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-green-50 text-green-900 rounded-full"
+              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-stone-200/50 text-green-900 rounded-full"
             >
               Revenue
               <ArrowUpRight class="h-4 w-4" />
             </Button>
             <Button
               variant="outline"
-              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-green-50 text-green-900 rounded-full"
+              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-stone-200/50 text-green-900 rounded-full"
             >
               Tokenomics
               <ArrowUpRight class="h-4 w-4" />
             </Button>
             <Button
               variant="outline"
-              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-green-50 text-green-900 rounded-full"
+              class="flex items-center gap-2 border-green-900 bg-transparent hover:bg-stone-200/50 text-green-900 rounded-full"
             >
               Timeline
               <ArrowUpRight class="h-4 w-4" />
             </Button>
           </div>
 
-          <div class="flex items-center justify-between">
+          <div
+            class="flex flex-col lg:flex-row lg:items-center justify-between gap-8"
+          >
             <div>
               <h4 class="mb-2 text-green-900">Socials</h4>
               <div class="flex gap-2">
                 <Button
                   variant="outline"
-                  class="h-10 w-10 rounded-md bg-green-900 p-0 text-white"
+                  class="h-10 w-10 rounded-md bg-green-900 hover:bg-green-800 hover:text-white p-0 text-white"
                 >
                   <Send class="h-5 w-5" />
                 </Button>
                 <Button
                   variant="outline"
-                  class="h-10 w-10 rounded-md bg-green-900 p-0 text-white"
+                  class="h-10 w-10 rounded-md bg-green-900 hover:bg-green-800 hover:text-white p-0 text-white"
                 >
                   <Send class="h-5 w-5" />
                 </Button>
                 <Button
                   variant="outline"
-                  class="h-10 w-10 rounded-md bg-green-900 p-0 text-white"
+                  class="h-10 w-10 rounded-md bg-green-900 hover:bg-green-800 hover:text-white p-0 text-white"
                 >
                   <Twitter class="h-5 w-5" />
                 </Button>
                 <Button
                   variant="outline"
-                  class="h-10 w-10 rounded-md bg-green-900 p-0 text-white"
+                  class="h-10 w-10 rounded-md bg-green-900 hover:bg-green-800 hover:text-white p-0 text-white"
                 >
                   <Youtube class="h-5 w-5" />
                 </Button>
@@ -168,8 +180,12 @@
             <div>
               <h4 class="mb-2 text-green-900">Get the app!</h4>
               <div class="flex gap-4">
-                <div class="h-10 w-32 rounded-md bg-gray-200"></div>
-                <div class="h-10 w-32 rounded-md bg-gray-200"></div>
+                <a href="#">
+                  <img width="140" src="/images/google-play-icon.svg" alt="" />
+                </a>
+                <a href="#">
+                  <img width="140" src="/images/app-store-icon.svg" alt="" />
+                </a>
               </div>
             </div>
           </div>
