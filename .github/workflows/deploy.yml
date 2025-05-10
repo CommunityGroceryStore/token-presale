@@ -1,11 +1,11 @@
-name: Build erc20-presale docker image & deploy
+name: Build token-presale docker image & deploy
 
 on:
   push:
     branches:
       - main
 env:
-  IMAGE_NAME: erc20-presale
+  IMAGE_NAME: token-presale
 
 jobs:
   publish:
@@ -20,14 +20,20 @@ jobs:
           fetch-depth: 0
 
       - name: Set up environment variables
-        run: echo "NUXT_PUBLIC_COMMIT_HASH=${{ github.sha }}" >> $GITHUB_ENV
-      - name: docker-login-ghcr.io
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | \
-            docker login ghcr.io -u $ --password-stdin
+        run: echo "COMMIT_HASH=${{ github.sha }}" >> $GITHUB_ENV
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build image
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}" --build-arg NUXT_PUBLIC_COMMIT_HASH=${{ github.sha }}
-
+        run: |
+          docker build . \
+            --file Dockerfile \
+            --tag $IMAGE_NAME \
+            --label "runnumber=${GITHUB_RUN_ID}" \
+            --build-arg COMMIT_HASH=${{ github.sha }}
       - name: Push image
         run: |
           IMAGE_ID=$CONTAINER_REGISTRY_ADDR/${{ github.repository_owner }}/$IMAGE_NAME
