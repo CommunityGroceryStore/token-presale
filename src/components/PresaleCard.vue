@@ -154,7 +154,6 @@
 
 <script lang="ts" setup>
 import { useAppKit } from '@reown/appkit/vue'
-import { useStorage } from '@vueuse/core'
 import {
   useAccount,
   useChainId,
@@ -180,26 +179,11 @@ const { address, isConnected } = useAccount()
 const chainId = useChainId()
 const { open } = useAppKit()
 const { writeContractAsync } = useWriteContract()
-const tokenContractAddress = useStorage<`0x${string}`>(
-  'VITE_CGS_TOKEN_CONTRACT_ADDRESS',
-  import.meta.env.VITE_CGS_TOKEN_CONTRACT_ADDRESS as `0x${string}`
-)
-const vestingContractAddress = useStorage<`0x${string}`>(
-  'VITE_CGS_VESTING_CONTRACT_ADDRESS',
-  import.meta.env.VITE_CGS_VESTING_CONTRACT_ADDRESS as `0x${string}`
-)
-const presaleContractAddress = useStorage<`0x${string}`>(
-  'VITE_CGS_PRESALE_CONTRACT_ADDRESS',
-  import.meta.env.VITE_CGS_PRESALE_CONTRACT_ADDRESS as `0x${string}`
-)
-const usdcContractAddress = useStorage<`0x${string}`>(
-  'VITE_USDC_CONTRACT_ADDRESS',
-  import.meta.env.VITE_USDC_CONTRACT_ADDRESS as `0x${string}`
-)
-const usdtContractAddress = useStorage<`0x${string}`>(
-  'VITE_USDT_CONTRACT_ADDRESS',
-  import.meta.env.VITE_USDT_CONTRACT_ADDRESS as `0x${string}`
-)
+const tokenContractAddress = import.meta.env.VITE_CGS_TOKEN_CONTRACT_ADDRESS as `0x${string}` | undefined
+const vestingContractAddress = import.meta.env.VITE_CGS_VESTING_CONTRACT_ADDRESS as `0x${string}` | undefined
+const presaleContractAddress = import.meta.env.VITE_CGS_PRESALE_CONTRACT_ADDRESS as `0x${string}` | undefined
+const usdcContractAddress = import.meta.env.VITE_USDC_CONTRACT_ADDRESS as `0x${string}` | undefined
+const usdtContractAddress = import.meta.env.VITE_USDT_CONTRACT_ADDRESS as `0x${string}` | undefined
 const feedbackMessage = ref<string | null>(null)
 const feedbackMessageTxHash = ref<string | null>(null)
 const selectedToken = ref('USDT')
@@ -252,83 +236,87 @@ const {
   data: isPresalePaused,
   isPending: isPresalePausedPending
 } = useReadContract({
-  address: presaleContractAddress.value,
+  address: presaleContractAddress!,
   abi: cgsTokenPresaleAbi,
   functionName: 'isPresalePaused' as const,
   query: {
-    enabled: computed(() => !!presaleContractAddress.value)
+    enabled: computed(() => !!presaleContractAddress)
   }
 })
 const {
   data: usdcBalance,
   refetch: refetchUsdcBalance
 } = useReadContract({
-  address: usdcContractAddress.value,
+  address: usdcContractAddress!,
   abi: erc20Abi,
   functionName: 'balanceOf' as const,
   args: [ computed(() => address.value!) ],
   query: {
-    enabled: computed(() => !!usdcContractAddress.value && !!address.value)
+    enabled: computed(() => !!address.value && !!usdcContractAddress)
   }
 })
 const {
   data: usdcPresaleContractAllowance,
   refetch: refetchUsdcPresaleContractAllowance
 } = useReadContract({
-  address: usdcContractAddress.value,
+  address: usdcContractAddress!,
   abi: erc20Abi,
   functionName: 'allowance' as const,
-  args: [computed(() => address.value!), presaleContractAddress.value],
+  args: [computed(() => address.value!), presaleContractAddress!],
   query: {
-    enabled: computed(() => !!address.value && !!usdcContractAddress.value)
+    enabled: computed(
+      () => !!address.value && !!usdcContractAddress && !!presaleContractAddress
+    )
   }
 })
 const {
   data: usdtBalance,
   refetch: refetchUsdtBalance
 } = useReadContract({
-  address: usdtContractAddress.value,
+  address: usdtContractAddress!,
   abi: erc20Abi,
   functionName: 'balanceOf' as const,
   args: [ computed(() => address.value!) ],
   query: {
-    enabled: computed(() => !!usdtContractAddress.value && !!address.value)
+    enabled: computed(() => !!address.value && !!usdtContractAddress)
   }
 })
 const {
   data: usdtPresaleContractAllowance,
   refetch: refetchUsdtPresaleContractAllowance
 } = useReadContract({
-  address: usdtContractAddress.value,
+  address: usdtContractAddress!,
   abi: erc20Abi,
   functionName: 'allowance' as const,
-  args: [computed(() => address.value!), presaleContractAddress.value],
+  args: [computed(() => address.value!), presaleContractAddress!],
   query: {
-    enabled: computed(() => !!address.value && !!usdtContractAddress.value)
+    enabled: computed(
+      () => !!address.value && !!usdtContractAddress && !!presaleContractAddress
+    )
   }
 })
 const {
   data: cgsBalance,
   refetch: refetchCgsBalance
 } = useReadContract({
-  address: tokenContractAddress.value,
+  address: tokenContractAddress!,
   abi: erc20Abi,
   functionName: 'balanceOf' as const,
   args: [ computed(() => address.value!) ],
   query: {
-    enabled: computed(() => !!tokenContractAddress.value && !!address.value)
+    enabled: computed(() => !!address.value && !!tokenContractAddress)
   }
 })
 const {
   data: cgsVestingSchedule,
   refetch: refetchCgsVestingSchedule
 } = useReadContract({
-  address: vestingContractAddress.value,
+  address: vestingContractAddress!,
   abi: cgsVestingAbi,
   functionName: 'vestingSchedules' as const,
   args: [ computed(() => address.value!) ],
   query: {
-    enabled: computed(() => !!tokenContractAddress.value && !!address.value)
+    enabled: computed(() => !!address.value && !!vestingContractAddress)
   }
 })
 const swap = async () => {
@@ -336,7 +324,7 @@ const swap = async () => {
     console.error('Wallet not connected')
     return
   }
-  if (!presaleContractAddress.value) {
+  if (!presaleContractAddress) {
     console.error('Presale contract address not set')
     return
   }
@@ -355,8 +343,8 @@ const swap = async () => {
   )
   const paymentTokenAddress =
     selectedToken.value === 'USDT'
-      ? usdtContractAddress.value
-      : usdcContractAddress.value
+      ? usdtContractAddress
+      : usdcContractAddress
   console.log(
     `Swapping ${payAmount.value} [${atomicPayAmount}] ` +
       `${selectedToken.value} [${paymentTokenAddress}] ` +
@@ -377,21 +365,21 @@ const swap = async () => {
       : atomicPayAmount
     if (remainingToApprove > 0n) {
       const approvalTxHash = await writeContractAsync({
-        address: paymentTokenAddress,
+        address: paymentTokenAddress!,
         abi: erc20Abi,
         functionName: 'approve' as const,
-        args: [presaleContractAddress.value, remainingToApprove]
+        args: [presaleContractAddress, remainingToApprove]
       })
       console.log(`Approval transaction hash: ${approvalTxHash}`)
     }
 
     const txHash = await writeContractAsync({
-      address: presaleContractAddress.value,
+      address: presaleContractAddress,
       abi: cgsTokenPresaleAbi,
       functionName: 'buy' as const,
       args: [
         atomicPayAmount,
-        paymentTokenAddress
+        paymentTokenAddress!
       ]
     })
     console.log(`Swap transaction hash: ${txHash}`)

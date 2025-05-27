@@ -228,7 +228,6 @@
 <script setup lang="ts">
 import { useAppKit } from '@reown/appkit/vue'
 import { useQuery } from '@tanstack/vue-query'
-import { useStorage } from '@vueuse/core'
 import {
   useAccount,
   useChainId,
@@ -259,14 +258,8 @@ const isClaiming = ref(false)
 const etherscanUrl = chainId.value === mainnet.id
   ? 'https://etherscan.io'
   : 'https://sepolia.etherscan.io'
-const tokenContractAddress = useStorage<`0x${string}`>(
-  'VITE_CGS_TOKEN_CONTRACT_ADDRESS',
-  import.meta.env.VITE_CGS_TOKEN_CONTRACT_ADDRESS as `0x${string}`
-)
-const vestingContractAddress = useStorage<`0x${string}`>(
-  'VITE_CGS_VESTING_CONTRACT_ADDRESS',
-  import.meta.env.VITE_CGS_VESTING_CONTRACT_ADDRESS as `0x${string}`
-)
+const tokenContractAddress = import.meta.env.VITE_CGS_TOKEN_CONTRACT_ADDRESS as `0x${string}` | undefined
+const vestingContractAddress = import.meta.env.VITE_CGS_VESTING_CONTRACT_ADDRESS as `0x${string}` | undefined
 const feedbackMessage = ref<string | null>(null)
 const feedbackMessageTxHash = ref<string | null>(null)
 const hasTokensToClaim = computed(() => {
@@ -425,36 +418,36 @@ const isCgsVestingScheduleInitialized = computed(() => {
   return !!cgsVestingSchedule.value && cgsVestingSchedule.value[5]
 })
 const { data: cgsBalance, refetch: refetchCgsBalance } = useReadContract({
-  address: tokenContractAddress.value,
+  address: tokenContractAddress!,
   abi: erc20Abi,
   functionName: 'balanceOf' as const,
   args: [ computed(() => address.value!) ],
   query: {
-    enabled: computed(() => !!tokenContractAddress.value && !!address.value)
+    enabled: computed(() => !!address.value && !!tokenContractAddress)
   }
 })
 const {
   data: cgsVestingSchedule,
   refetch: refetchCgsVestingSchedule
 } = useReadContract({
-  address: vestingContractAddress.value,
+  address: vestingContractAddress!,
   abi: cgsVestingAbi,
   functionName: 'vestingSchedules' as const,
   args: [ computed(() => address.value!) ],
   query: {
-    enabled: computed(() => !!tokenContractAddress.value && !!address.value)
+    enabled: computed(() => !!address.value && !!vestingContractAddress)
   }
 })
 const {
   data: cgsVestedAndClaimableTokens,
   refetch: refetchCgsVestedAndClaimableTokens
 } = useReadContract({
-  address: vestingContractAddress.value,
+  address: vestingContractAddress!,
   abi: cgsVestingAbi,
   functionName: 'getVestedAndClaimableTokens' as const,
   args: [ computed(() => address.value!) ],
   query: {
-    enabled: computed(() => !!tokenContractAddress.value && !!address.value)
+    enabled: computed(() => !!address.value && !!vestingContractAddress)
   }
 })
 const {
@@ -469,23 +462,23 @@ const {
     }
 
     const contract = new ethers.Contract(
-      vestingContractAddress.value,
+      vestingContractAddress!,
       cgsVestingAbi,
       provider
     )
     const filter = contract.filters.VestingScheduleClosed(address.value)
     const events = await contract.queryFilter(filter)
-    console.log('VestingScheduleClosed events:', events)
 
     return events
-  }
+  },
+  enabled: computed(() => !!address.value && !!vestingContractAddress)
 })
 const claim = async () => {
   if (!isConnected.value) {
     console.error('Wallet not connected')
     return
   }
-  if (!vestingContractAddress.value) {
+  if (!vestingContractAddress) {
     console.error('Vesting contract address not set')
     return
   }
@@ -504,7 +497,7 @@ const claim = async () => {
   console.log(`Claiming ${cgsVestClaimableAmountFormatted.value} $CGS`)
   try {
     const claimTxHash = await writeContractAsync({
-      address: vestingContractAddress.value,
+      address: vestingContractAddress!,
       abi: cgsVestingAbi,
       functionName: 'claimVestedTokens' as const
     })
