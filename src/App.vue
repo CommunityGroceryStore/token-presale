@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { createAppKit } from '@reown/appkit/vue'
-import { arbitrum, mainnet, sepolia } from '@reown/appkit/networks'
+// import { arbitrum, mainnet, sepolia } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { networks } from '@/lib/wagmi/config'
 import Main from './components/Main.vue'
@@ -34,7 +34,7 @@ const wagmiAdapter = new WagmiAdapter({
 // 4. Create modal
 createAppKit({
   adapters: [wagmiAdapter],
-  networks: [mainnet, sepolia, arbitrum],
+  networks: networks as any,
   metadata,
   projectId,
   features: {

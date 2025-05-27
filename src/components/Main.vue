@@ -4,7 +4,9 @@
     <header class="border-b border-gray-300 px-4 py-3">
       <div class="container mx-auto flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <div class="h-10 w-10 rounded-full bg-green-100"></div>
+          <div class="h-10 w-10 rounded-full bg-green-100">
+            <img src="/cgs.png" alt="CGS Logo" class="h-full w-full rounded-full" />
+          </div>
           <div>
             <h1 class="font-bold text-green-900">Community</h1>
             <div class="flex items-center">
@@ -16,16 +18,57 @@
             </div>
           </div>
         </div>
-        <Button
-          @click="
-            isConnected
-              ? open({ view: 'Account' })
-              : open({ view: 'Connect', namespace: 'eip155' })
-          "
-          class="rounded-full bg-green-900 px-4 py-2 text-white hover:bg-green-800"
-        >
-          {{ isConnected ? walletAddress : 'Connect Wallet' }}
-        </Button>
+
+        <div>
+          <template v-if="isConnected">
+            <Button
+              @click="tab = 'presale'"
+              class="
+                rounded-full
+                bg-green-900
+                mr-2
+                px-4
+                py-2
+                text-white
+                hover:bg-green-800
+                cursor-pointer
+              "
+              :class="tab === 'presale' ? 'bg-green-700' : ''"
+            >Presale</Button>
+            <Button
+              @click="tab = 'cgs-balance'"
+              class="
+                rounded-full
+                bg-green-900
+                mr-2
+                px-4
+                py-2
+                text-white
+                hover:bg-green-800
+                cursor-pointer
+              "
+              :class="tab === 'cgs-balance' ? 'bg-green-700' : ''"
+            >My $CGS</Button>
+          </template>
+
+          <Button
+            @click="
+              isConnected
+                ? open({ view: 'Account' })
+                : open({ view: 'Connect', namespace: 'eip155' })
+            "
+            class="
+              rounded-full
+              bg-green-900
+              px-4 py-2
+              text-white
+              hover:bg-green-800
+              cursor-pointer
+            "
+          >
+            {{ isConnected ? walletAddress : 'Connect Wallet' }}
+          </Button>
+        </div>
       </div>
     </header>
 
@@ -47,7 +90,7 @@
                   >Grocery</span
                 >
                 <span
-                  class="ml-2 rounded bg-green-900 px-3 py-1 text-md md:text-lg lg:text-xl font-bold text-white"
+                  class="ml-2 mt-2 rounded bg-green-900 px-3 py-1 text-md md:text-lg lg:text-xl font-bold text-white"
                   >Store</span
                 >
               </div>
@@ -55,9 +98,7 @@
             <div class="h-16 w-1 bg-green-900" />
             <div>
               <h3 class="text-xl md:text-2xl font-bold text-green-900">
-                Crypto
-                <br />
-                Token Presale
+                $CGS Token Presale
               </h3>
             </div>
           </div>
@@ -192,101 +233,15 @@
         </div>
 
         <!-- Right Column - Swap Interface -->
-        <div class="flex items-center justify-center">
-          <Card class="w-full max-w-md border-gray-300 bg-[#E8E6DB] p-6">
-            <CardContent class="p-0">
-              <div class="mb-6 flex flex-col items-center">
-                <div class="mb-2 h-16 w-16 rounded-full bg-green-100"></div>
-                <h3 class="text-xl font-bold text-green-900">Acquire $CGS</h3>
-                <p class="text-sm text-green-700">Crypto Token Presale</p>
-              </div>
-
-              <div class="mb-6 grid grid-cols-2 gap-2">
-                <div class="rounded-lg border-gray-300 bg-gray-50 p-3">
-                  <p class="text-xs text-green-700">Initial Presale Price</p>
-                  <p class="text-lg font-bold text-green-900">$0.04</p>
-                </div>
-                <div class="rounded-lg border-gray-300 bg-gray-50 p-3">
-                  <p class="text-xs text-green-700">Public Uniswap Launch</p>
-                  <p class="text-lg font-bold text-green-900">$0.08</p>
-                </div>
-              </div>
-
-              <div class="mb-4 grid grid-cols-2 gap-4">
-                <Button
-                  :class="[
-                    'flex items-center justify-center gap-2 rounded-md py-3',
-                    selectedToken === 'USDT'
-                      ? 'bg-green-900 text-white hover:bg-green-900'
-                      : 'bg-transparent border-green-700 text-green-900 border  hover:border-green-900 hover:bg-transparent'
-                  ]"
-                  @click="selectedToken = 'USDT'"
-                >
-                  <CircleDollarSign class="h-5 w-5" />
-                  USDT
-                </Button>
-                <Button
-                  :class="[
-                    'flex items-center justify-center gap-2 rounded-md py-3',
-                    selectedToken === 'USDC'
-                      ? 'bg-green-900 text-white hover:bg-green-900'
-                      : 'bg-transparent border-green-700 text-green-900 border  hover:border-green-900 hover:bg-transparent'
-                  ]"
-                  @click="selectedToken = 'USDC'"
-                >
-                  <CircleDollarSign class="h-5 w-5" />
-                  USDC
-                </Button>
-              </div>
-
-              <div class="mb-1 text-right text-xs text-green-700">
-                Need Wallet?
-                <span class="cursor-pointer font-bold text-green-900">↗</span>
-              </div>
-
-              <div class="mb-4 rounded-md border-gray-300 bg-gray-50 p-4">
-                <div class="mb-1 flex items-center justify-between">
-                  <span class="text-sm text-green-700"
-                    >You pay ({{ selectedToken }})</span
-                  >
-                  <div class="flex items-center gap-1 text-sm text-green-900">
-                    <CircleDollarSign class="h-4 w-4" />
-                    USDT
-                  </div>
-                </div>
-                <Input
-                  v-model="payAmount"
-                  type="number"
-                  class="border-none shadow-none text-xl font-bold text-green-900 focus-visible:ring-0"
-                  placeholder="0.00"
-                />
-              </div>
-
-              <div class="mb-6 rounded-md border-gray-300 bg-gray-50 p-4">
-                <div class="mb-1 flex items-center justify-between">
-                  <span class="text-sm text-green-700">You receive</span>
-                  <div class="flex items-center gap-1 text-sm text-green-900">
-                    <CircleDollarSign class="h-4 w-4" />
-                    CGS
-                  </div>
-                </div>
-                <div class="text-xl font-bold text-green-900">
-                  {{ receiveAmount }}
-                </div>
-              </div>
-
-              <Button
-                @click="isConnected ? swap() : open()"
-                class="w-full bg-green-900 py-3 text-white hover:bg-green-800 rounded-full"
-              >
-                {{ isConnected ? 'Swap' : 'Connect Wallet' }}
-              </Button>
-
-              <div class="mt-4 text-center text-xs text-green-700">
-                <span class="cursor-pointer">Disclaimer</span>
-              </div>
-            </CardContent>
-          </Card>
+        <div class="flex  justify-center">
+          <CGSBalanceCard
+            v-if="tab === 'cgs-balance'"
+            @back-to-presale-clicked="tab = 'presale'"
+          />
+          <PresaleCard
+            v-else
+            @balance-clicked="tab = 'cgs-balance'"
+          />
         </div>
       </div>
     </main>
@@ -304,43 +259,25 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useAccount } from '@wagmi/vue'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
 import {
   ArrowUpRight,
-  CircleDollarSign,
   Send,
   Twitter,
   Youtube
 } from 'lucide-vue-next'
-import { abbreviateAddress } from '@/utils'
 import { useAppKit } from '@reown/appkit/vue'
 
-// Wallet connection with @wagmi/vue
+import CGSBalanceCard from './CGSBalanceCard.vue'
+import PresaleCard from './PresaleCard.vue'
+import { Button } from '@/components/ui/button'
+import { abbreviateAddress } from '@/utils'
+
 const { address, isConnected } = useAccount()
 const { open } = useAppKit()
-
-// Swap state
-const selectedToken = ref('USDT')
-const payAmount = ref('100')
-const receiveAmount = computed(() => {
-  if (!payAmount.value) return '0'
-  return (parseFloat(payAmount.value) / 0.04).toFixed(2)
-})
-
 const walletAddress = computed(() =>
   address.value ? abbreviateAddress({ address: address.value }) : ''
 )
-
-// Swap function
-const swap = async () => {
-  // This would integrate with @reown/appkit for the actual swap
-  console.log(
-    `Swapping ${payAmount.value} ${selectedToken.value} for ${receiveAmount.value} CGS`
-  )
-  alert(`Swap successful! You received ${receiveAmount.value} CGS`)
-}
+const tab = ref('presale')
 </script>
