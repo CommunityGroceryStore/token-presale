@@ -8,6 +8,7 @@ Node 22+
 Copy contract ABIs and TypeScript bindings from the [CommunityGroceryStore/contracts](https://github.com/communitygrocerystore/contracts) repository:
 ```bash
 git clone https://github.com/communitygrocerystore/contracts
+cd contracts
 npm install
 npx hardhat compile
 npx wagmi generate
