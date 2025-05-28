@@ -15,10 +15,11 @@ npx wagmi generate
 npx tsx scripts/copy-contract-bytecode.ts
 ```
 Copy the following files from:
-`communitygrocerystore/contracts/artifacts/contract-bytecode.ts`
-`communitygrocerystore/contracts/artifacts/wagmi-generated.ts`
+- `communitygrocerystore/contracts/artifacts/contract-bytecode.ts`
+- `communitygrocerystore/contracts/artifacts/wagmi-generated.ts`
+
 To:
-`communitygrocerystore/token-presale/src/assets/contract-artifacts`
+- `communitygrocerystore/token-presale/src/assets/contract-artifacts`
 
 # Configure Environment
 Create an `.env` file in the `/src` directory with the following contents filled out appropriately:
