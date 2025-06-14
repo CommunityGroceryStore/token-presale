@@ -8,6 +8,7 @@ declare module '@wagmi/vue' {
   }
 }
 
+console.log('Current network:', import.meta.env.VITE_EVM_NETWORK)
 export const localhost = defineChain({
   id: 539,
   name: 'Localhost',

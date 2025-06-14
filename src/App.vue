@@ -1,6 +1,6 @@
 <template>
-  <div class="flex min-h-screen">
-    <Main />
+  <div class="flex min-h-screen ">
+    <Main class="bg-[url('/images/indexbgimg.png')] bg-contain bg-bottom bg-no-repeat object-cover" />
   </div>
 </template>
 
