@@ -17,9 +17,6 @@
           </p>
           <p class="text-[18px] font-bold text-[#004322]">$0.04</p>
         </div>
-        <!-- <div
-          class="rounded-[15px] rounded-l-none bg-[#F9F8F4] border border-[#D2D0CE] border-l-0 px-4 py-5"
-        > -->
         <div>
           <p class="text-[#004322] font-normal text-[12px] md:text-[15px] text-right">
             Public Uniswap Launch
@@ -56,7 +53,6 @@
                   </defs>
                 </svg>
               </span>
-              <!-- <CircleDollarSign class="h-5 w-5" /> -->
               USDT
             </Button>
             <Button :class="[
@@ -69,40 +65,22 @@
                 <!-- USDC Icon -->
                 <img src="/images/usdcicon.png" alt="USDC Icon" class="w-full" style="object-fit: contain" />
               </div>
-              <!-- <CircleDollarSign class="h-5 w-5" /> -->
               USDC
             </Button>
           </div>
           <div class="mb-6 flex justify-center items-center">
-            <!-- <span class="text-[#004322] text-[15px] font-medium mr-2">Need Wallet?</span>
-            <Button
-              class="bg-green-900 text-white rounded-md p-1 h-6 w-6 flex items-center justify-center ml-1 cursor-pointer hover:bg-green-800"
-              style="min-width:1.5rem;">
-              <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 16 15" fill="none">
-                <path
-                  d="M10.9566 4.67203L10.8707 8.5284M10.9566 4.67203L7.10019 4.58621M10.9566 4.67203L4.79689 10.5635"
-                  stroke="#EFEEE5" />
-              </svg>
-            </Button> -->
-            <!-- <ArrowUpRight class="h-4 w-4" /> -->
           </div>
         </div>
         <div
           class="flex items-center justify-between mb-4 rounded-[16px] bg-[#F9F8F4] border border-[#D2D0CE] py-[20px] px-[28px]">
           <div class="mb-1 flex flex-col items-start justify-between">
             <span class="text-[16px] text-[#004322] font-normal">You pay (USD)</span>
-            <!-- <div class="flex items-center gap-1 text-sm text-[#004322]"> -->
-            <!-- Balance: {{ selectedTokenBalanceFormatted }}
-              <CircleDollarSign class="h-4 w-4" /> -->
             <div class="flex items-center w-[50%]">
               <p class="text-[#004322] text-[18px] font-bold">$</p>
               <Input style="font-size: 18px" v-model="payAmount" type="number"
                 class="px-[0px] border-none shadow-none text-[#004322] font-bold focus-visible:ring-0"
                 placeholder="0.00" />
             </div>
-            <!-- <span class="mt-3 text-[#004322] text-[18px] font-bold">{{ '$' + selectedTokenBalanceFormatted }}</span> -->
-            <!-- </div> -->
-            <!-- {{ selectedToken }} -->
           </div>
           <div
             class='flex items-center justify-center w-fit gap-2 bg-[#004322] rounded-[66px] pt-[6px] pr-[15px] pb-[6px] pl-[7px]'>
@@ -134,14 +112,10 @@
           class="flex items-center justify-between mb-6 rounded-[16px] bg-[#F9F8F4] border border-[#D2D0CE] py-[20px] px-[28px]">
           <div class="mb-1 flex flex-col items-start justify-between">
             <span class="text-[16px] text-[#004322] font-normal">You receive</span>
-            <!-- <div class="flex items-center gap-1 text-sm text-[#004322]"> -->
-            <!-- Balance: {{ selectedTokenBalanceFormatted }}
-              <CircleDollarSign class="h-4 w-4" /> -->
             <span class="mt-3 text-[#004322] text-[18px] font-bold">{{
               receiveAmount
             }}</span>
-            <!-- </div> -->
-            <!-- {{ selectedToken }} -->
+
           </div>
           <div
             class="flex items-center justify-center w-fit gap-2 bg-[#004322] rounded-[66px] pt-[5px] pr-[15px] pb-[5px] pl-[8px]">
@@ -150,16 +124,6 @@
             </div>
             <span class="text-[#E8E6DB] text-[16px] font-medium"> CGS </span>
           </div>
-          <!-- <div class="mb-1 flex items-center justify-between">
-            <span class="text-sm text-[#004322]">You receive</span>
-            <div class="flex items-center gap-1 text-sm text-[#004322]">
-              <a class="underline cursor-pointer" @click="emit('balance-clicked')">
-                Balance (Incl. Vested):
-              </a>{{ cgsBalanceFormatted }}
-              <CircleDollarSign class="h-4 w-4" />
-              CGS
-            </div>
-          </div> -->
         </div>
 
         <template v-if="isConnected">
@@ -183,29 +147,11 @@
             Connect Wallet
           </Button>
         </template>
-
-        <!-- <Button @click="isConnected ? swap() : open()" class="
-            w-full
-            h-[52px]
-            bg-[#004322]
-            py-[15px]
-            text-[#E8E6DB]
-            font-normal
-            text-[18px]
-            hover:bg-green-800
-            rounded-[27px]
-            cursor-pointer
-          " :disabled="!isConnected || isSwapping || (isConnected && !agreedToTerms)"
-          :class="isSwapping ? 'opacity-50 cursor-not-allowed' : ''">
-          <LoaderCircle v-if="isSwapping" class="animate-spin h-5 w-5 mr-2" />
-          {{ isConnected ? 'Swap' : 'Connect Wallet' }}
-        </Button> -->
         <label class="flex items-center justify-center space-x-3 text-[#004322] text-lg font-medium mt-4">
           <input type="checkbox" class="input" v-model="agreedToTerms" />
           <span class="custom-checkbox"></span>
           <span class="cursor-pointer font-medium text-[14px] text-[#004322]">
             I agree to the
-            <!-- <span @click="presaleTerms = true" class="underline">presale terms</span> -->
             <span @click="openLink('presaleterms')" class="underline">presale terms</span>
             and the <span @click="openLink('termsconditions')" class="underline">terms & conditions</span>
           </span>

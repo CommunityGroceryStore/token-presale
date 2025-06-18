@@ -1,14 +1,11 @@
 <template>
-  <!-- <div class="min-h-screen w-screen bg-[#EFEEE5] px-0 md:px-0 md:px-0"> -->
   <div class="min-h-screen w-screen bg-[#EFEEE5] px-0 md:px-0 md:px-0">
     <!-- Header -->
-    <!-- <div class="container mx-auto flex items-center justify-between"> -->
     <header class="border-b border-gray-300 px-4 py-3">
       <div class="2xl:mx-[100px] flex items-center justify-between">
         <div class="flex items-center gap-2">
           <div>
             <img src="/images/Group 359.svg" alt="CGS Logo" class="w-[75px]" />
-            <!-- <img src="/cgs.png" alt="CGS Logo" class="h-full w-full rounded-full" /> -->
           </div>
           <div>
             <h1 class="font-bold text-[#004322]">Community</h1>
@@ -56,7 +53,6 @@
 
     <!-- Main Content -->
     <main class="2xl:mx-[100px] px-4 pt-6">
-      <!-- <main class="px-4 py-8"> -->
       <div class="grid gap-8 2xl:grid-cols-12">
         <!-- Left Column - Info -->
         <div class="space-y-6 2xl:col-span-7">
@@ -101,8 +97,6 @@
                   </div>
                   <p class="text-[13px] text-[#FFF] mt-2 text-center">
                     Public Presale
-
-                    <!-- <span class="text-[#7FA190] text-[11px]">(Vested)</span> -->
                   </p>
                   <div
                     class="mt-1 text-[#004322] text-[12px] font-medium px-3 py-1 rounded-[5px] bg-[#FFF] text-center flex flex-col md:flex-row items-center justify-center">
@@ -140,7 +134,6 @@
                   </div>
                   <p class="text-[13px] text-[#FFF] mt-2 text-center">
                     Public Presale
-                    <!-- <span class="text-[#7FA190] text-[11px]">(Vested)</span> -->
                   </p>
                   <div
                     class="mt-1 text-[#004322] text-[12px] font-medium px-3 py-1 rounded-[5px] bg-[#FFF] text-center flex flex-col md:flex-row items-center justify-center">
@@ -253,14 +246,12 @@
 
           <div class="flex flex-col lg:flex-row lg:items-center">
             <div>
-              <!-- <h4 class="mb-2 text-[#004322]">Socials</h4> -->
               <h4 class="mb-2 text-[#004322] text-[14px] font-normal text-center md:text-left">
                 Join Our Community
               </h4>
               <div class="flex gap-2 justify-center md:justify-start">
                 <Button @click="openLink('Telegramofficial')" variant="outline"
                   class="h-[50px] w-[50px] rounded-[10px] border border-[#004322] bg-[#004322] hover:bg-green-800 hover:text-white p-0 text-white cursor-pointer">
-                  <!-- <Send class="h-5 w-5" /> -->
                   <img class="w-[50%]" src="/images/telegramicon.png" />
                 </Button>
                 <Button @click="openLink('Telegramcommunity')" variant="outline"
@@ -270,13 +261,11 @@
                 <Button @click="openLink('xcommunity')" variant="outline"
                   class="h-[50px] w-[50px] rounded-[10px] border border-[#004322] bg-[#004322] hover:bg-green-800 hover:text-white p-0 text-white cursor-pointer">
                   <img class="w-[50%]" src="/images/twitter.png" />
-                  <!-- <Twitter class="h-5 w-5" /> -->
                 </Button>
               </div>
             </div>
 
             <div class="mt-3 lg:mt-0 lg:ml-20">
-              <!-- <h4 class="mb-2 text-[#004322]">Get the app!</h4> -->
               <h4 class="mb-2 text-[#004322] text-[14px] font-normal text-center md:text-left">
                 Coming Soon!
               </h4>

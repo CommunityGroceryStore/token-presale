@@ -282,7 +282,6 @@
     </CardContent>
   </Card>
 </template>
-
 <script setup lang="ts">
 import { useAppKit } from "@reown/appkit/vue"
 import { useQuery } from "@tanstack/vue-query"
