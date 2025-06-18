@@ -348,11 +348,11 @@ const cgsVestedBalanceFormatted = computed(() => {
     : '0.00'
 })
 const cgsVestingScheduleTotalAmountFormatted = computed(() => {
-  if (!address.value) {
-    return '---'
-  }
+  if (!address.value) { return '---' }
 
-  const totalAmount = cgsVestingSchedule.value ? cgsVestingSchedule.value[0] : 0n
+  const totalAmount = cgsVestingSchedule.value
+    ? cgsVestingSchedule.value[0]
+    : 0n
 
   return totalAmount
     ? parseFloat(ethers.formatUnits(totalAmount.toString(), 18))
