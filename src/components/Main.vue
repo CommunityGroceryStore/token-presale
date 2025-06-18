@@ -633,67 +633,65 @@
 }
 </style>
 <script lang="ts" setup>
-import { computed, ref } from "vue";
-import { useAccount } from "@wagmi/vue";
-// import { ArrowUpRight, Send, Twitter, Youtube } from "lucide-vue-next";
-import { useAppKit } from "@reown/appkit/vue";
+import { computed, ref } from 'vue'
+import { useAccount } from '@wagmi/vue'
+import { useAppKit } from '@reown/appkit/vue'
 
-import CGSBalanceCard from "./CGSBalanceCard.vue";
-import PresaleCard from "./PresaleCard.vue";
-import { Button } from "@/components/ui/button";
-import { abbreviateAddress } from "@/utils";
+import CGSBalanceCard from './CGSBalanceCard.vue'
+import PresaleCard from './PresaleCard.vue'
+import { Button } from '@/components/ui/button'
+import { abbreviateAddress } from '@/utils'
 
-const { address, isConnected } = useAccount();
-const { open } = useAppKit();
-const showDisclaimer = ref(false);
-const fairlaunch = ref(false);
+const { address, isConnected } = useAccount()
+const { open } = useAppKit()
+const showDisclaimer = ref(false)
+const fairlaunch = ref(false)
 const walletAddress = computed(() =>
-  address.value ? abbreviateAddress({ address: address.value }) : ""
-);
-const tab = ref("presale");
+  address.value ? abbreviateAddress({ address: address.value }) : ''
+)
+const tab = ref('presale')
 const buttons = [
-  { type: "audits", label: "Audits" },
-  { type: "strategy", label: "Strategy" },
-  { type: "incentives", label: "Incentives" },
-  { type: "revenue", label: "Revenue" },
-  { type: "tokenomics", label: "Tokenomics" },
-  { type: "timeline", label: "Timeline" },
-];
+  { type: 'audits', label: 'Audits' },
+  { type: 'strategy', label: 'Strategy' },
+  { type: 'incentives', label: 'Incentives' },
+  { type: 'revenue', label: 'Revenue' },
+  { type: 'tokenomics', label: 'Tokenomics' },
+  { type: 'timeline', label: 'Timeline' }
+]
 
-const activeButton = ref("audits"); // Default active button
+const activeButton = ref('audits')
 
 const handleButtonClick = (type: string) => {
-  activeButton.value = type;
-  if (type !== "audits") {
-    openLink(type);
+  activeButton.value = type
+  if (type !== 'audits') {
+    openLink(type)
   }
-};
+}
 const openLink = (type: string) => {
   const links: any = {
     strategy:
-      "https://www.communitygrocerystore.com/holders/community-grocery-store-holder-market-strategy",
+      'https://www.communitygrocerystore.com/holders/community-grocery-store-holder-market-strategy',
     incentives:
-      "https://www.communitygrocerystore.com/holders/community-grocery-store-holder-voting-incentives",
+      'https://www.communitygrocerystore.com/holders/community-grocery-store-holder-voting-incentives',
     revenue:
-      "https://www.communitygrocerystore.com/holders/community-grocery-store-holder-revenue-streams",
+      'https://www.communitygrocerystore.com/holders/community-grocery-store-holder-revenue-streams',
     tokenomics:
-      "https://www.communitygrocerystore.com/holders/community-grocery-store-holder-tokenomics",
+      'https://www.communitygrocerystore.com/holders/community-grocery-store-holder-tokenomics',
     timeline:
-      "https://www.communitygrocerystore.com/holders/community-grocery-store-holder-project-timeline",
-    telegramofficial: "https://t.me/commgroceryofficial",
-    telegramcommunity: "https://t.me/commgrocerycommunity",
-    xcommunity: "https://x.com/commgrocery",
-    communitygrocerystore: "https://www.communitygrocerystore.com/",
-    privacypolicy: "https://www.communitygrocerystore.com/privacy-policy",
-    termsconditions: "https://www.communitygrocerystore.com/terms-and-conditions",
-    fairlaunchpolicy: "https://www.communitygrocerystore.com/fair-launch-policy",
-    presaleterms: "https://www.communitygrocerystore.com/presale-disclaimer",
-  };
-
-  const url: any = links[type.toLowerCase()];
-  console.log("Opening link:", url);
-  if (url) {
-    window.open(url, "_blank");
+      'https://www.communitygrocerystore.com/holders/community-grocery-store-holder-project-timeline',
+    telegramofficial: 'https://t.me/commgroceryofficial',
+    telegramcommunity: 'https://t.me/commgrocerycommunity',
+    xcommunity: 'https://x.com/commgrocery',
+    communitygrocerystore: 'https://www.communitygrocerystore.com/',
+    privacypolicy: 'https://www.communitygrocerystore.com/privacy-policy',
+    termsconditions: 'https://www.communitygrocerystore.com/terms-and-conditions',
+    fairlaunchpolicy: 'https://www.communitygrocerystore.com/fair-launch-policy',
+    presaleterms: 'https://www.communitygrocerystore.com/presale-disclaimer'
   }
-};
+
+  const url: any = links[type.toLowerCase()]
+  if (url) {
+    window.open(url, '_blank')
+  }
+}
 </script>

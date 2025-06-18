@@ -372,55 +372,55 @@
 }
 </style>
 <script lang="ts" setup>
-import { useAppKit } from "@reown/appkit/vue";
-import { useAccount, useChainId, useReadContract, useWriteContract } from "@wagmi/vue";
-import { mainnet } from "@wagmi/vue/chains";
-import { ArrowUpRight, LoaderCircle } from "lucide-vue-next";
-import { computed, defineEmits, ref } from "vue";
-import { ethers } from "ethers";
+import { useAppKit } from '@reown/appkit/vue'
+import { useAccount, useChainId, useReadContract, useWriteContract } from '@wagmi/vue'
+import { mainnet } from '@wagmi/vue/chains'
+import { ArrowUpRight, LoaderCircle } from 'lucide-vue-next'
+import { computed, defineEmits, ref } from 'vue'
+import { ethers } from 'ethers'
 
 import {
   cgsTokenPresaleAbi,
   cgsVestingAbi,
   erc20Abi,
-} from "@/assets/contract-artifacts/wagmi-generated";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+} from '@/assets/contract-artifacts/wagmi-generated'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
 
-const agreedToTerms = ref(false);
-const presaleTerms = ref(false);
-const emit = defineEmits(["balance-clicked"]);
-const { address, isConnected } = useAccount();
-const chainId = useChainId();
-const { open } = useAppKit();
-const { writeContractAsync } = useWriteContract();
+const agreedToTerms = ref(false)
+const presaleTerms = ref(false)
+const emit = defineEmits(['balance-clicked'])
+const { address, isConnected } = useAccount()
+const chainId = useChainId()
+const { open } = useAppKit()
+const { writeContractAsync } = useWriteContract()
 const tokenContractAddress = import.meta.env.VITE_CGS_TOKEN_CONTRACT_ADDRESS as
   | `0x${string}`
-  | undefined;
+  | undefined
 const vestingContractAddress = import.meta.env.VITE_CGS_VESTING_CONTRACT_ADDRESS as
   | `0x${string}`
-  | undefined;
+  | undefined
 const presaleContractAddress = import.meta.env.VITE_CGS_PRESALE_CONTRACT_ADDRESS as
   | `0x${string}`
-  | undefined;
+  | undefined
 const usdcContractAddress = import.meta.env.VITE_USDC_CONTRACT_ADDRESS as
   | `0x${string}`
-  | undefined;
+  | undefined
 const usdtContractAddress = import.meta.env.VITE_USDT_CONTRACT_ADDRESS as
   | `0x${string}`
-  | undefined;
-const feedbackMessage = ref<string | null>(null);
-const feedbackMessageTxHash = ref<string | null>(null);
-const selectedToken = ref("USDT");
-const payAmount = ref("100");
-const isSwapping = ref(false);
+  | undefined
+const feedbackMessage = ref<string | null>(null)
+const feedbackMessageTxHash = ref<string | null>(null)
+const selectedToken = ref('USDT')
+const payAmount = ref('100')
+const isSwapping = ref(false)
 const etherscanUrl =
-  chainId.value === mainnet.id ? "https://etherscan.io" : "https://sepolia.etherscan.io";
+  chainId.value === mainnet.id ? 'https://etherscan.io' : 'https://sepolia.etherscan.io'
 const receiveAmount = computed(() => {
-  if (!payAmount.value) return "0";
-  return (parseFloat(payAmount.value) / 0.04).toFixed(2);
-});
+  if (!payAmount.value) return '0'
+  return (parseFloat(payAmount.value) / 0.04).toFixed(2)
+})
 // const selectedTokenBalance = computed(() => {
 //   if (selectedToken.value === 'USDT') {
 //     return usdtBalance.value ? usdtBalance.value.toString() : '0'
@@ -460,162 +460,162 @@ const receiveAmount = computed(() => {
 const { data: isPresalePaused, isPending: isPresalePausedPending } = useReadContract({
   address: presaleContractAddress!,
   abi: cgsTokenPresaleAbi,
-  functionName: "isPresalePaused" as const,
+  functionName: 'isPresalePaused' as const,
   query: {
     enabled: computed(() => !!presaleContractAddress),
   },
-});
+})
 const { refetch: refetchUsdcBalance } = useReadContract({
   address: usdcContractAddress!,
   abi: erc20Abi,
-  functionName: "balanceOf" as const,
+  functionName: 'balanceOf' as const,
   args: [computed(() => address.value!)],
   query: {
     enabled: computed(() => !!address.value && !!usdcContractAddress),
   },
-});
+})
 const {
   data: usdcPresaleContractAllowance,
   refetch: refetchUsdcPresaleContractAllowance,
 } = useReadContract({
   address: usdcContractAddress!,
   abi: erc20Abi,
-  functionName: "allowance" as const,
+  functionName: 'allowance' as const,
   args: [computed(() => address.value!), presaleContractAddress!],
   query: {
     enabled: computed(
       () => !!address.value && !!usdcContractAddress && !!presaleContractAddress
     ),
   },
-});
+})
 const { refetch: refetchUsdtBalance } = useReadContract({
   address: usdtContractAddress!,
   abi: erc20Abi,
-  functionName: "balanceOf" as const,
+  functionName: 'balanceOf' as const,
   args: [computed(() => address.value!)],
   query: {
     enabled: computed(() => !!address.value && !!usdtContractAddress),
   },
-});
+})
 const {
   data: usdtPresaleContractAllowance,
   refetch: refetchUsdtPresaleContractAllowance,
 } = useReadContract({
   address: usdtContractAddress!,
   abi: erc20Abi,
-  functionName: "allowance" as const,
+  functionName: 'allowance' as const,
   args: [computed(() => address.value!), presaleContractAddress!],
   query: {
     enabled: computed(
       () => !!address.value && !!usdtContractAddress && !!presaleContractAddress
     ),
   },
-});
+})
 const { refetch: refetchCgsBalance } = useReadContract({
   address: tokenContractAddress!,
   abi: erc20Abi,
-  functionName: "balanceOf" as const,
+  functionName: 'balanceOf' as const,
   args: [computed(() => address.value!)],
   query: {
     enabled: computed(() => !!address.value && !!tokenContractAddress),
   },
-});
+})
 const { refetch: refetchCgsVestingSchedule } = useReadContract({
   address: vestingContractAddress!,
   abi: cgsVestingAbi,
-  functionName: "vestingSchedules" as const,
+  functionName: 'vestingSchedules' as const,
   args: [computed(() => address.value!)],
   query: {
     enabled: computed(() => !!address.value && !!vestingContractAddress),
   },
-});
+})
 const swap = async () => {
   if (!isConnected.value) {
-    console.error("Wallet not connected");
-    return;
+    console.error('Wallet not connected')
+    return
   }
   if (!presaleContractAddress) {
-    console.error("Presale contract address not set");
-    return;
+    console.error('Presale contract address not set')
+    return
   }
   if (!payAmount.value || parseFloat(payAmount.value) <= 0) {
-    alert("Please enter a valid amount to swap");
-    return;
+    alert('Please enter a valid amount to swap')
+    return
   }
   if (isSwapping.value) {
-    console.warn("Swap already in progress");
-    return;
+    console.warn('Swap already in progress')
+    return
   }
-  isSwapping.value = true;
-  const atomicPayAmount = ethers.parseUnits(payAmount.value.toString(), 6);
+  isSwapping.value = true
+  const atomicPayAmount = ethers.parseUnits(payAmount.value.toString(), 6)
   const paymentTokenAddress =
-    selectedToken.value === "USDT" ? usdtContractAddress : usdcContractAddress;
+    selectedToken.value === 'USDT' ? usdtContractAddress : usdcContractAddress
   console.log(
     `Swapping ${payAmount.value} [${atomicPayAmount}] ` +
     `${selectedToken.value} [${paymentTokenAddress}] ` +
     `for ${receiveAmount.value} $CGS`
-  );
+  )
   try {
     const allowance =
-      selectedToken.value === "USDT"
+      selectedToken.value === 'USDT'
         ? usdtPresaleContractAllowance.value
-        : usdcPresaleContractAllowance.value;
+        : usdcPresaleContractAllowance.value
     if (!allowance || allowance < atomicPayAmount) {
       console.log(
         `Insufficient allowance for ${selectedToken.value}. ` +
         `Current allowance: ${allowance}, required: ${atomicPayAmount}`
-      );
+      )
     }
-    const remainingToApprove = allowance ? atomicPayAmount - allowance : atomicPayAmount;
+    const remainingToApprove = allowance ? atomicPayAmount - allowance : atomicPayAmount
     if (remainingToApprove > 0n) {
       const approvalTxHash = await writeContractAsync({
         address: paymentTokenAddress!,
         abi: erc20Abi,
-        functionName: "approve" as const,
+        functionName: 'approve' as const,
         args: [presaleContractAddress, remainingToApprove],
-      });
-      console.log(`Approval transaction hash: ${approvalTxHash}`);
+      })
+      console.log(`Approval transaction hash: ${approvalTxHash}`)
     }
 
     const txHash = await writeContractAsync({
       address: presaleContractAddress,
       abi: cgsTokenPresaleAbi,
-      functionName: "buy" as const,
+      functionName: 'buy' as const,
       args: [atomicPayAmount, paymentTokenAddress!],
-    });
-    console.log(`Swap transaction hash: ${txHash}`);
+    })
+    console.log(`Swap transaction hash: ${txHash}`)
 
     feedbackMessage.value =
-      `Swap successful! ` + `You received ${receiveAmount.value} $CGS!`;
-    feedbackMessageTxHash.value = txHash;
+      `Swap successful! ` + `You received ${receiveAmount.value} $CGS!`
+    feedbackMessageTxHash.value = txHash
   } catch (error) {
-    console.error("Error during swap:", error);
+    console.error('Error during swap:', error)
   } finally {
-    console.log("Refetching balances...");
-    await refetchCgsBalance();
-    await refetchCgsVestingSchedule();
-    if (selectedToken.value === "USDT") {
-      await refetchUsdtBalance();
-      await refetchUsdtPresaleContractAllowance();
-    } else if (selectedToken.value === "USDC") {
-      await refetchUsdcBalance();
-      await refetchUsdcPresaleContractAllowance();
+    console.log('Refetching balances...')
+    await refetchCgsBalance()
+    await refetchCgsVestingSchedule()
+    if (selectedToken.value === 'USDT') {
+      await refetchUsdtBalance()
+      await refetchUsdtPresaleContractAllowance()
+    } else if (selectedToken.value === 'USDC') {
+      await refetchUsdcBalance()
+      await refetchUsdcPresaleContractAllowance()
     }
 
-    isSwapping.value = false;
+    isSwapping.value = false
   }
-};
+}
 
 const openLink = (type: string) => {
   const links: any = {
-    termsconditions: "https://www.communitygrocerystore.com/terms-and-conditions",
-    presaleterms: "https://www.communitygrocerystore.com/presale-disclaimer",
-  };
-
-  const url: any = links[type.toLowerCase()];
-  console.log("Opening link:", url);
-  if (url) {
-    window.open(url, "_blank");
+    termsconditions: 'https://www.communitygrocerystore.com/terms-and-conditions',
+    presaleterms: 'https://www.communitygrocerystore.com/presale-disclaimer'
   }
-};
+
+  const url: any = links[type.toLowerCase()]
+  console.log('Opening link:', url)
+  if (url) {
+    window.open(url, '_blank')
+  }
+}
 </script>
