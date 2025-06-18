@@ -351,13 +351,17 @@ const feedbackMessageTxHash = ref<string | null>(null)
 const selectedToken = ref('USDT')
 const payAmount = ref('100')
 const isSwapping = ref(false)
-const etherscanUrl =
-  chainId.value === mainnet.id ? 'https://etherscan.io' : 'https://sepolia.etherscan.io'
+const etherscanUrl = chainId.value === mainnet.id
+  ? 'https://etherscan.io'
+  : 'https://sepolia.etherscan.io'
 const receiveAmount = computed(() => {
   if (!payAmount.value) return '0'
   return (parseFloat(payAmount.value) / 0.04).toFixed(2)
 })
-const { data: isPresalePaused, isPending: isPresalePausedPending } = useReadContract({
+const {
+  data: isPresalePaused,
+  isPending: isPresalePausedPending
+} = useReadContract({
   address: presaleContractAddress!,
   abi: cgsTokenPresaleAbi,
   functionName: 'isPresalePaused' as const,
@@ -369,7 +373,7 @@ const { refetch: refetchUsdcBalance } = useReadContract({
   address: usdcContractAddress!,
   abi: erc20Abi,
   functionName: 'balanceOf' as const,
-  args: [computed(() => address.value!)],
+  args: [ computed(() => address.value!) ],
   query: {
     enabled: computed(() => !!address.value && !!usdcContractAddress)
   }
@@ -381,7 +385,7 @@ const {
   address: usdcContractAddress!,
   abi: erc20Abi,
   functionName: 'allowance' as const,
-  args: [computed(() => address.value!), presaleContractAddress!],
+  args: [ computed(() => address.value!), presaleContractAddress! ],
   query: {
     enabled: computed(
       () => !!address.value && !!usdcContractAddress && !!presaleContractAddress
@@ -392,7 +396,7 @@ const { refetch: refetchUsdtBalance } = useReadContract({
   address: usdtContractAddress!,
   abi: erc20Abi,
   functionName: 'balanceOf' as const,
-  args: [computed(() => address.value!)],
+  args: [ computed(() => address.value!) ],
   query: {
     enabled: computed(() => !!address.value && !!usdtContractAddress)
   }
@@ -404,7 +408,7 @@ const {
   address: usdtContractAddress!,
   abi: erc20Abi,
   functionName: 'allowance' as const,
-  args: [computed(() => address.value!), presaleContractAddress!],
+  args: [ computed(() => address.value!), presaleContractAddress! ],
   query: {
     enabled: computed(
       () => !!address.value && !!usdtContractAddress && !!presaleContractAddress
@@ -415,7 +419,7 @@ const { refetch: refetchCgsBalance } = useReadContract({
   address: tokenContractAddress!,
   abi: erc20Abi,
   functionName: 'balanceOf' as const,
-  args: [computed(() => address.value!)],
+  args: [ computed(() => address.value!) ],
   query: {
     enabled: computed(() => !!address.value && !!tokenContractAddress)
   }
@@ -424,7 +428,7 @@ const { refetch: refetchCgsVestingSchedule } = useReadContract({
   address: vestingContractAddress!,
   abi: cgsVestingAbi,
   functionName: 'vestingSchedules' as const,
-  args: [computed(() => address.value!)],
+  args: [ computed(() => address.value!) ],
   query: {
     enabled: computed(() => !!address.value && !!vestingContractAddress)
   }
