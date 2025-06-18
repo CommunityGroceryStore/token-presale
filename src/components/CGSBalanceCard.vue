@@ -371,10 +371,10 @@ const cgsVestingScheduleClaimedAmountFormatted = computed(() => {
 
   return claimedAmount
     ? parseFloat(ethers.formatUnits(claimedAmount.toString(), 18))
-      .toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
+        .toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
     : '0.00'
 })
 const formatDate = (timestamp: bigint): string => {
@@ -429,12 +429,11 @@ const cgsVestClaimableAmountFormatted = computed(() => {
     : 0n
 
   return cgsVestClaimableAmount
-    ? parseFloat(
-        ethers.formatUnits(cgsVestClaimableAmount.toString(), 18)
-      ).toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
+    ? parseFloat(ethers.formatUnits(cgsVestClaimableAmount.toString(), 18))
+        .toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
     : '0.00'
 })
 const cgsVestVestedAmountFormatted = computed(() => {
@@ -446,10 +445,10 @@ const cgsVestVestedAmountFormatted = computed(() => {
 
   return cgsVestVestedAmount
     ? parseFloat(ethers.formatUnits(cgsVestVestedAmount.toString(), 18))
-      .toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
+        .toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
     : '0.00'
 })
 const cgsBalanceFormatted = computed(() => {
@@ -459,10 +458,10 @@ const cgsBalanceFormatted = computed(() => {
 
   return holdingBalance
     ? parseFloat(ethers.formatUnits(holdingBalance.toString(), 18))
-      .toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
+        .toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
     : '0.00'
 })
 const cgsTotalBalanceFormatted = computed(() => {
