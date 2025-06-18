@@ -328,7 +328,7 @@ import { ethers } from 'ethers'
 import {
   cgsTokenPresaleAbi,
   cgsVestingAbi,
-  erc20Abi,
+  erc20Abi
 } from '@/assets/contract-artifacts/wagmi-generated'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -367,49 +367,13 @@ const receiveAmount = computed(() => {
   if (!payAmount.value) return '0'
   return (parseFloat(payAmount.value) / 0.04).toFixed(2)
 })
-// const selectedTokenBalance = computed(() => {
-//   if (selectedToken.value === 'USDT') {
-//     return usdtBalance.value ? usdtBalance.value.toString() : '0'
-//   } else if (selectedToken.value === 'USDC') {
-//     return usdcBalance.value ? usdcBalance.value.toString() : '0'
-//   }
-//   return '0'
-// })
-// const selectedTokenBalanceFormatted = computed(() => {
-//   if (!address.value) { return '---' }
-
-//   return selectedTokenBalance.value
-//     ? parseFloat(ethers.formatUnits(selectedTokenBalance.value, 6))
-//       .toLocaleString('en-US', {
-//         minimumFractionDigits: 2,
-//         maximumFractionDigits: 2
-//       })
-//     : '0.00'
-// })
-// const cgsBalanceFormatted = computed(() => {
-//   if (!address.value) { return '---' }
-
-//   const holdingBalance = cgsBalance.value ? cgsBalance.value : 0n
-//   const cgsVestedBalance = cgsVestingSchedule.value
-//     ? cgsVestingSchedule.value[0]
-//     : 0n
-//   const totalCgsBalance = holdingBalance + cgsVestedBalance
-
-//   return totalCgsBalance
-//     ? parseFloat(ethers.formatUnits(totalCgsBalance.toString(), 18))
-//       .toLocaleString('en-US', {
-//         minimumFractionDigits: 2,
-//         maximumFractionDigits: 2
-//       })
-//     : '0.00'
-// })
 const { data: isPresalePaused, isPending: isPresalePausedPending } = useReadContract({
   address: presaleContractAddress!,
   abi: cgsTokenPresaleAbi,
   functionName: 'isPresalePaused' as const,
   query: {
-    enabled: computed(() => !!presaleContractAddress),
-  },
+    enabled: computed(() => !!presaleContractAddress)
+  }
 })
 const { refetch: refetchUsdcBalance } = useReadContract({
   address: usdcContractAddress!,
@@ -417,8 +381,8 @@ const { refetch: refetchUsdcBalance } = useReadContract({
   functionName: 'balanceOf' as const,
   args: [computed(() => address.value!)],
   query: {
-    enabled: computed(() => !!address.value && !!usdcContractAddress),
-  },
+    enabled: computed(() => !!address.value && !!usdcContractAddress)
+  }
 })
 const {
   data: usdcPresaleContractAllowance,
@@ -431,8 +395,8 @@ const {
   query: {
     enabled: computed(
       () => !!address.value && !!usdcContractAddress && !!presaleContractAddress
-    ),
-  },
+    )
+  }
 })
 const { refetch: refetchUsdtBalance } = useReadContract({
   address: usdtContractAddress!,
@@ -440,8 +404,8 @@ const { refetch: refetchUsdtBalance } = useReadContract({
   functionName: 'balanceOf' as const,
   args: [computed(() => address.value!)],
   query: {
-    enabled: computed(() => !!address.value && !!usdtContractAddress),
-  },
+    enabled: computed(() => !!address.value && !!usdtContractAddress)
+  }
 })
 const {
   data: usdtPresaleContractAllowance,
@@ -454,8 +418,8 @@ const {
   query: {
     enabled: computed(
       () => !!address.value && !!usdtContractAddress && !!presaleContractAddress
-    ),
-  },
+    )
+  }
 })
 const { refetch: refetchCgsBalance } = useReadContract({
   address: tokenContractAddress!,
@@ -463,8 +427,8 @@ const { refetch: refetchCgsBalance } = useReadContract({
   functionName: 'balanceOf' as const,
   args: [computed(() => address.value!)],
   query: {
-    enabled: computed(() => !!address.value && !!tokenContractAddress),
-  },
+    enabled: computed(() => !!address.value && !!tokenContractAddress)
+  }
 })
 const { refetch: refetchCgsVestingSchedule } = useReadContract({
   address: vestingContractAddress!,
@@ -472,8 +436,8 @@ const { refetch: refetchCgsVestingSchedule } = useReadContract({
   functionName: 'vestingSchedules' as const,
   args: [computed(() => address.value!)],
   query: {
-    enabled: computed(() => !!address.value && !!vestingContractAddress),
-  },
+    enabled: computed(() => !!address.value && !!vestingContractAddress)
+  }
 })
 const swap = async () => {
   if (!isConnected.value) {
@@ -496,11 +460,6 @@ const swap = async () => {
   const atomicPayAmount = ethers.parseUnits(payAmount.value.toString(), 6)
   const paymentTokenAddress =
     selectedToken.value === 'USDT' ? usdtContractAddress : usdcContractAddress
-  console.log(
-    `Swapping ${payAmount.value} [${atomicPayAmount}] ` +
-    `${selectedToken.value} [${paymentTokenAddress}] ` +
-    `for ${receiveAmount.value} $CGS`
-  )
   try {
     const allowance =
       selectedToken.value === 'USDT'
@@ -518,7 +477,7 @@ const swap = async () => {
         address: paymentTokenAddress!,
         abi: erc20Abi,
         functionName: 'approve' as const,
-        args: [presaleContractAddress, remainingToApprove],
+        args: [presaleContractAddress, remainingToApprove]
       })
       console.log(`Approval transaction hash: ${approvalTxHash}`)
     }
@@ -559,7 +518,6 @@ const openLink = (type: string) => {
   }
 
   const url: any = links[type.toLowerCase()]
-  console.log('Opening link:', url)
   if (url) {
     window.open(url, '_blank')
   }

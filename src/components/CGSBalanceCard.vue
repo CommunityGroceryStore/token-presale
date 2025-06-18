@@ -290,7 +290,7 @@ import {
   useChainId,
   useConnectorClient,
   useReadContract,
-  useWriteContract,
+  useWriteContract
 } from '@wagmi/vue'
 import { mainnet } from '@wagmi/vue/chains'
 import { ethers } from 'ethers'
@@ -339,7 +339,7 @@ const cgsVestedBalanceFormatted = computed(() => {
         'en-US',
         {
           minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          maximumFractionDigits: 2
         }
       )
     : '0.00'
@@ -354,7 +354,7 @@ const cgsVestingScheduleTotalAmountFormatted = computed(() => {
   return totalAmount
     ? parseFloat(ethers.formatUnits(totalAmount.toString(), 18)).toLocaleString('en-US', {
         minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        maximumFractionDigits: 2
       })
     : '0.00'
 })
@@ -370,7 +370,7 @@ const cgsVestingScheduleClaimedAmountFormatted = computed(() => {
         'en-US',
         {
           minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          maximumFractionDigits: 2
         }
       )
     : '0.00'
@@ -382,13 +382,13 @@ const formatDate = (timestamp: bigint): string => {
   const time = date.toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit',
-    hour12: true,
+    hour12: true
   })
 
   const dateStr = date.toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
-    year: 'numeric',
+    year: 'numeric'
   })
 
   return `${time}\n${dateStr}` // Line break between time and date
@@ -402,7 +402,6 @@ const cgsVestingScheduleStartFormatted = computed(() => {
   const startTimestamp = cgsVestingSchedule.value ? cgsVestingSchedule.value[2] : 0n
 
   return startTimestamp ? formatDate(startTimestamp) : 'N/A'
-  // return startTimestamp ? new Date(Number(startTimestamp) * 1000).toUTCString() : 'N/A'
 })
 const cgsVestingScheduleCliffFormatted = computed(() => {
   if (!address.value) {
@@ -413,7 +412,6 @@ const cgsVestingScheduleCliffFormatted = computed(() => {
     ? cgsVestingSchedule.value[2] + cgsVestingSchedule.value[4]
     : 0n
   return cliffTimestamp ? formatDate(cliffTimestamp) : 'N/A'
-  // return cliffTimestamp ? new Date(Number(cliffTimestamp) * 1000).toUTCString() : 'N/A'
 })
 const cgsVestingScheduleEndFormatted = computed(() => {
   if (!address.value) {
@@ -424,7 +422,6 @@ const cgsVestingScheduleEndFormatted = computed(() => {
     ? cgsVestingSchedule.value[2] + cgsVestingSchedule.value[3]
     : 0n
   return endTimestamp ? formatDate(endTimestamp) : 'N/A'
-  // return endTimestamp ? new Date(Number(endTimestamp) * 1000).toUTCString() : 'N/A'
 })
 const cgsVestClaimableAmountFormatted = computed(() => {
   if (!address.value) {
@@ -440,7 +437,7 @@ const cgsVestClaimableAmountFormatted = computed(() => {
         ethers.formatUnits(cgsVestClaimableAmount.toString(), 18)
       ).toLocaleString('en-US', {
         minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        maximumFractionDigits: 2
       })
     : '0.00'
 })
@@ -458,7 +455,7 @@ const cgsVestVestedAmountFormatted = computed(() => {
         'en-US',
         {
           minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          maximumFractionDigits: 2
         }
       )
     : '0.00'
@@ -475,7 +472,7 @@ const cgsBalanceFormatted = computed(() => {
         'en-US',
         {
           minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          maximumFractionDigits: 2
         }
       )
     : '0.00'
@@ -498,7 +495,7 @@ const cgsTotalBalanceFormatted = computed(() => {
         'en-US',
         {
           minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
+          maximumFractionDigits: 2
         }
       )
     : '0.00'
@@ -506,15 +503,14 @@ const cgsTotalBalanceFormatted = computed(() => {
 const isCgsVestingScheduleInitialized = computed(() => {
   return !!cgsVestingSchedule.value && cgsVestingSchedule.value[5]
 })
-// const isCgsVestingScheduleInitialized = true
 const { data: cgsBalance, refetch: refetchCgsBalance } = useReadContract({
   address: tokenContractAddress!,
   abi: erc20Abi,
   functionName: 'balanceOf' as const,
   args: [computed(() => address.value!)],
   query: {
-    enabled: computed(() => !!address.value && !!tokenContractAddress),
-  },
+    enabled: computed(() => !!address.value && !!tokenContractAddress)
+  }
 })
 const { data: cgsVestingSchedule, refetch: refetchCgsVestingSchedule } = useReadContract({
   address: vestingContractAddress!,
@@ -522,8 +518,8 @@ const { data: cgsVestingSchedule, refetch: refetchCgsVestingSchedule } = useRead
   functionName: 'vestingSchedules' as const,
   args: [computed(() => address.value!)],
   query: {
-    enabled: computed(() => !!address.value && !!vestingContractAddress),
-  },
+    enabled: computed(() => !!address.value && !!vestingContractAddress)
+  }
 })
 const {
   data: cgsVestedAndClaimableTokens,
@@ -534,8 +530,8 @@ const {
   functionName: 'getVestedAndClaimableTokens' as const,
   args: [computed(() => address.value!)],
   query: {
-    enabled: computed(() => !!address.value && !!vestingContractAddress),
-  },
+    enabled: computed(() => !!address.value && !!vestingContractAddress)
+  }
 })
 const { data: vestingClosedEvents, isPending: isVestingClosedEventsPending } = useQuery({
   queryKey: ['vesting-schedule-closed-events'],
@@ -555,7 +551,7 @@ const { data: vestingClosedEvents, isPending: isVestingClosedEventsPending } = u
 
     return events
   },
-  enabled: computed(() => !!address.value && !!vestingContractAddress),
+  enabled: computed(() => !!address.value && !!vestingContractAddress)
 })
 const claim = async () => {
   if (!isConnected.value) {
@@ -580,7 +576,7 @@ const claim = async () => {
     const claimTxHash = await writeContractAsync({
       address: vestingContractAddress!,
       abi: cgsVestingAbi,
-      functionName: 'claimVestedTokens' as const,
+      functionName: 'claimVestedTokens' as const
     })
     console.log(`Claim transaction sent: ${claimTxHash}`)
 
