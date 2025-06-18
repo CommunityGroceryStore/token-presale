@@ -297,7 +297,10 @@ import { ethers } from 'ethers'
 import { ArrowUpRight, LoaderCircle } from 'lucide-vue-next'
 import { computed, defineEmits, ref } from 'vue'
 
-import { cgsVestingAbi, erc20Abi } from '@/assets/contract-artifacts/wagmi-generated'
+import {
+  cgsVestingAbi,
+  erc20Abi
+} from '@/assets/contract-artifacts/wagmi-generated'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { getProvider } from '@/utils/web3'
@@ -310,8 +313,9 @@ const chainId = useChainId()
 const { open } = useAppKit()
 const { writeContractAsync } = useWriteContract()
 const isClaiming = ref(false)
-const etherscanUrl =
-  chainId.value === mainnet.id ? 'https://etherscan.io' : 'https://sepolia.etherscan.io'
+const etherscanUrl = chainId.value === mainnet.id
+  ? 'https://etherscan.io'
+  : 'https://sepolia.etherscan.io'
 const tokenContractAddress = import.meta.env.VITE_CGS_TOKEN_CONTRACT_ADDRESS as
   | `0x${string}`
   | undefined
@@ -324,9 +328,7 @@ const hasTokensToClaim = computed(() => {
   return cgsVestedAndClaimableTokens.value && cgsVestedAndClaimableTokens.value[1] > 0n
 })
 const cgsVestedBalanceFormatted = computed(() => {
-  if (!address.value) {
-    return '---'
-  }
+  if (!address.value) { return '---' }
 
   const cgsVestTotalAmount = cgsVestingSchedule.value ? cgsVestingSchedule.value[0] : 0n
   const cgsVestClaimedAmount = cgsVestingSchedule.value
@@ -395,18 +397,14 @@ const formatDate = (timestamp: bigint): string => {
 }
 
 const cgsVestingScheduleStartFormatted = computed(() => {
-  if (!address.value) {
-    return '---'
-  }
+  if (!address.value) { return '---' }
 
   const startTimestamp = cgsVestingSchedule.value ? cgsVestingSchedule.value[2] : 0n
 
   return startTimestamp ? formatDate(startTimestamp) : 'N/A'
 })
 const cgsVestingScheduleCliffFormatted = computed(() => {
-  if (!address.value) {
-    return '---'
-  }
+  if (!address.value) { return '---' }
 
   const cliffTimestamp = cgsVestingSchedule.value
     ? cgsVestingSchedule.value[2] + cgsVestingSchedule.value[4]
@@ -414,9 +412,7 @@ const cgsVestingScheduleCliffFormatted = computed(() => {
   return cliffTimestamp ? formatDate(cliffTimestamp) : 'N/A'
 })
 const cgsVestingScheduleEndFormatted = computed(() => {
-  if (!address.value) {
-    return '---'
-  }
+  if (!address.value) { return '---' }
 
   const endTimestamp = cgsVestingSchedule.value
     ? cgsVestingSchedule.value[2] + cgsVestingSchedule.value[3]
@@ -424,9 +420,7 @@ const cgsVestingScheduleEndFormatted = computed(() => {
   return endTimestamp ? formatDate(endTimestamp) : 'N/A'
 })
 const cgsVestClaimableAmountFormatted = computed(() => {
-  if (!address.value) {
-    return '---'
-  }
+  if (!address.value) { return '---' }
 
   const cgsVestClaimableAmount = cgsVestedAndClaimableTokens.value
     ? cgsVestedAndClaimableTokens.value[1]
@@ -442,9 +436,7 @@ const cgsVestClaimableAmountFormatted = computed(() => {
     : '0.00'
 })
 const cgsVestVestedAmountFormatted = computed(() => {
-  if (!address.value) {
-    return '---'
-  }
+  if (!address.value) { return '---' }
 
   const cgsVestVestedAmount = cgsVestedAndClaimableTokens.value
     ? cgsVestedAndClaimableTokens.value[0]
@@ -461,9 +453,7 @@ const cgsVestVestedAmountFormatted = computed(() => {
     : '0.00'
 })
 const cgsBalanceFormatted = computed(() => {
-  if (!address.value) {
-    return '---'
-  }
+  if (!address.value) { return '---' }
 
   const holdingBalance = cgsBalance.value ? cgsBalance.value : 0n
 
@@ -478,9 +468,7 @@ const cgsBalanceFormatted = computed(() => {
     : '0.00'
 })
 const cgsTotalBalanceFormatted = computed(() => {
-  if (!address.value) {
-    return '---'
-  }
+  if (!address.value) { return '---' }
 
   const holdingBalance = cgsBalance.value ? cgsBalance.value : 0n
   const cgsVestTotalAmount = cgsVestingSchedule.value ? cgsVestingSchedule.value[0] : 0n
