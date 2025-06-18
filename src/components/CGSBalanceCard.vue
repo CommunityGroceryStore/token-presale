@@ -283,26 +283,26 @@
   </Card>
 </template>
 <script setup lang="ts">
-import { useAppKit } from "@reown/appkit/vue"
-import { useQuery } from "@tanstack/vue-query"
+import { useAppKit } from '@reown/appkit/vue'
+import { useQuery } from '@tanstack/vue-query'
 import {
   useAccount,
   useChainId,
   useConnectorClient,
   useReadContract,
   useWriteContract,
-} from "@wagmi/vue"
-import { mainnet } from "@wagmi/vue/chains"
-import { ethers } from "ethers"
-import { ArrowUpRight, LoaderCircle } from "lucide-vue-next"
-import { computed, defineEmits, ref } from "vue"
+} from '@wagmi/vue'
+import { mainnet } from '@wagmi/vue/chains'
+import { ethers } from 'ethers'
+import { ArrowUpRight, LoaderCircle } from 'lucide-vue-next'
+import { computed, defineEmits, ref } from 'vue'
 
-import { cgsVestingAbi, erc20Abi } from "@/assets/contract-artifacts/wagmi-generated"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { getProvider } from "@/utils/web3"
+import { cgsVestingAbi, erc20Abi } from '@/assets/contract-artifacts/wagmi-generated'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { getProvider } from '@/utils/web3'
 
-const emit = defineEmits(["back-to-presale-clicked"])
+const emit = defineEmits(['back-to-presale-clicked'])
 
 const { address, isConnected } = useAccount()
 const connectorClient = useConnectorClient()
@@ -311,7 +311,7 @@ const { open } = useAppKit()
 const { writeContractAsync } = useWriteContract()
 const isClaiming = ref(false)
 const etherscanUrl =
-  chainId.value === mainnet.id ? "https://etherscan.io" : "https://sepolia.etherscan.io"
+  chainId.value === mainnet.id ? 'https://etherscan.io' : 'https://sepolia.etherscan.io'
 const tokenContractAddress = import.meta.env.VITE_CGS_TOKEN_CONTRACT_ADDRESS as
   | `0x${string}`
   | undefined
@@ -325,7 +325,7 @@ const hasTokensToClaim = computed(() => {
 })
 const cgsVestedBalanceFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const cgsVestTotalAmount = cgsVestingSchedule.value ? cgsVestingSchedule.value[0] : 0n
@@ -336,59 +336,59 @@ const cgsVestedBalanceFormatted = computed(() => {
 
   return cgsVestedBalance
     ? parseFloat(ethers.formatUnits(cgsVestedBalance.toString(), 18)).toLocaleString(
-        "en-US",
+        'en-US',
         {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         }
       )
-    : "0.00"
+    : '0.00'
 })
 const cgsVestingScheduleTotalAmountFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const totalAmount = cgsVestingSchedule.value ? cgsVestingSchedule.value[0] : 0n
 
   return totalAmount
-    ? parseFloat(ethers.formatUnits(totalAmount.toString(), 18)).toLocaleString("en-US", {
+    ? parseFloat(ethers.formatUnits(totalAmount.toString(), 18)).toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       })
-    : "0.00"
+    : '0.00'
 })
 const cgsVestingScheduleClaimedAmountFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const claimedAmount = cgsVestingSchedule.value ? cgsVestingSchedule.value[1] : 0n
 
   return claimedAmount
     ? parseFloat(ethers.formatUnits(claimedAmount.toString(), 18)).toLocaleString(
-        "en-US",
+        'en-US',
         {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         }
       )
-    : "0.00"
+    : '0.00'
 })
 const formatDate = (timestamp: bigint): string => {
-  if (!timestamp) return "N/A"
+  if (!timestamp) return 'N/A'
   const date = new Date(Number(timestamp) * 1000)
 
-  const time = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
+  const time = date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
     hour12: true,
   })
 
-  const dateStr = date.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
+  const dateStr = date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
   })
 
   return `${time}\n${dateStr}` // Line break between time and date
@@ -396,39 +396,39 @@ const formatDate = (timestamp: bigint): string => {
 
 const cgsVestingScheduleStartFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const startTimestamp = cgsVestingSchedule.value ? cgsVestingSchedule.value[2] : 0n
 
-  return startTimestamp ? formatDate(startTimestamp) : "N/A"
-  // return startTimestamp ? new Date(Number(startTimestamp) * 1000).toUTCString() : "N/A"
+  return startTimestamp ? formatDate(startTimestamp) : 'N/A'
+  // return startTimestamp ? new Date(Number(startTimestamp) * 1000).toUTCString() : 'N/A'
 })
 const cgsVestingScheduleCliffFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const cliffTimestamp = cgsVestingSchedule.value
     ? cgsVestingSchedule.value[2] + cgsVestingSchedule.value[4]
     : 0n
-  return cliffTimestamp ? formatDate(cliffTimestamp) : "N/A"
-  // return cliffTimestamp ? new Date(Number(cliffTimestamp) * 1000).toUTCString() : "N/A"
+  return cliffTimestamp ? formatDate(cliffTimestamp) : 'N/A'
+  // return cliffTimestamp ? new Date(Number(cliffTimestamp) * 1000).toUTCString() : 'N/A'
 })
 const cgsVestingScheduleEndFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const endTimestamp = cgsVestingSchedule.value
     ? cgsVestingSchedule.value[2] + cgsVestingSchedule.value[3]
     : 0n
-  return endTimestamp ? formatDate(endTimestamp) : "N/A"
-  // return endTimestamp ? new Date(Number(endTimestamp) * 1000).toUTCString() : "N/A"
+  return endTimestamp ? formatDate(endTimestamp) : 'N/A'
+  // return endTimestamp ? new Date(Number(endTimestamp) * 1000).toUTCString() : 'N/A'
 })
 const cgsVestClaimableAmountFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const cgsVestClaimableAmount = cgsVestedAndClaimableTokens.value
@@ -438,15 +438,15 @@ const cgsVestClaimableAmountFormatted = computed(() => {
   return cgsVestClaimableAmount
     ? parseFloat(
         ethers.formatUnits(cgsVestClaimableAmount.toString(), 18)
-      ).toLocaleString("en-US", {
+      ).toLocaleString('en-US', {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       })
-    : "0.00"
+    : '0.00'
 })
 const cgsVestVestedAmountFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const cgsVestVestedAmount = cgsVestedAndClaimableTokens.value
@@ -455,34 +455,34 @@ const cgsVestVestedAmountFormatted = computed(() => {
 
   return cgsVestVestedAmount
     ? parseFloat(ethers.formatUnits(cgsVestVestedAmount.toString(), 18)).toLocaleString(
-        "en-US",
+        'en-US',
         {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         }
       )
-    : "0.00"
+    : '0.00'
 })
 const cgsBalanceFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const holdingBalance = cgsBalance.value ? cgsBalance.value : 0n
 
   return holdingBalance
     ? parseFloat(ethers.formatUnits(holdingBalance.toString(), 18)).toLocaleString(
-        "en-US",
+        'en-US',
         {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         }
       )
-    : "0.00"
+    : '0.00'
 })
 const cgsTotalBalanceFormatted = computed(() => {
   if (!address.value) {
-    return "---"
+    return '---'
   }
 
   const holdingBalance = cgsBalance.value ? cgsBalance.value : 0n
@@ -495,13 +495,13 @@ const cgsTotalBalanceFormatted = computed(() => {
 
   return totalCgsBalance
     ? parseFloat(ethers.formatUnits(totalCgsBalance.toString(), 18)).toLocaleString(
-        "en-US",
+        'en-US',
         {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         }
       )
-    : "0.00"
+    : '0.00'
 })
 const isCgsVestingScheduleInitialized = computed(() => {
   return !!cgsVestingSchedule.value && cgsVestingSchedule.value[5]
@@ -510,7 +510,7 @@ const isCgsVestingScheduleInitialized = computed(() => {
 const { data: cgsBalance, refetch: refetchCgsBalance } = useReadContract({
   address: tokenContractAddress!,
   abi: erc20Abi,
-  functionName: "balanceOf" as const,
+  functionName: 'balanceOf' as const,
   args: [computed(() => address.value!)],
   query: {
     enabled: computed(() => !!address.value && !!tokenContractAddress),
@@ -519,7 +519,7 @@ const { data: cgsBalance, refetch: refetchCgsBalance } = useReadContract({
 const { data: cgsVestingSchedule, refetch: refetchCgsVestingSchedule } = useReadContract({
   address: vestingContractAddress!,
   abi: cgsVestingAbi,
-  functionName: "vestingSchedules" as const,
+  functionName: 'vestingSchedules' as const,
   args: [computed(() => address.value!)],
   query: {
     enabled: computed(() => !!address.value && !!vestingContractAddress),
@@ -531,18 +531,18 @@ const {
 } = useReadContract({
   address: vestingContractAddress!,
   abi: cgsVestingAbi,
-  functionName: "getVestedAndClaimableTokens" as const,
+  functionName: 'getVestedAndClaimableTokens' as const,
   args: [computed(() => address.value!)],
   query: {
     enabled: computed(() => !!address.value && !!vestingContractAddress),
   },
 })
 const { data: vestingClosedEvents, isPending: isVestingClosedEventsPending } = useQuery({
-  queryKey: ["vesting-schedule-closed-events"],
+  queryKey: ['vesting-schedule-closed-events'],
   queryFn: async () => {
     const provider = getProvider(connectorClient)
     if (!provider) {
-      throw new Error("No provider when fetching VestingScheduleClosed events!")
+      throw new Error('No provider when fetching VestingScheduleClosed events!')
     }
 
     const contract = new ethers.Contract(
@@ -559,19 +559,19 @@ const { data: vestingClosedEvents, isPending: isVestingClosedEventsPending } = u
 })
 const claim = async () => {
   if (!isConnected.value) {
-    console.error("Wallet not connected")
+    console.error('Wallet not connected')
     return
   }
   if (!vestingContractAddress) {
-    console.error("Vesting contract address not set")
+    console.error('Vesting contract address not set')
     return
   }
   if (!cgsVestedAndClaimableTokens.value || cgsVestedAndClaimableTokens.value[1] <= 0n) {
-    console.error("No claimable tokens available")
+    console.error('No claimable tokens available')
     return
   }
   if (isClaiming.value) {
-    console.warn("Claim already in progress")
+    console.warn('Claim already in progress')
     return
   }
   isClaiming.value = true
@@ -580,16 +580,16 @@ const claim = async () => {
     const claimTxHash = await writeContractAsync({
       address: vestingContractAddress!,
       abi: cgsVestingAbi,
-      functionName: "claimVestedTokens" as const,
+      functionName: 'claimVestedTokens' as const,
     })
     console.log(`Claim transaction sent: ${claimTxHash}`)
 
     feedbackMessage.value = `Claim successful!`
     feedbackMessageTxHash.value = claimTxHash
   } catch (error) {
-    console.error("Error claiming tokens:", error)
+    console.error('Error claiming tokens:', error)
   } finally {
-    console.log("Refetching balances and vesting schedule")
+    console.log('Refetching balances and vesting schedule')
     await refetchCgsBalance()
     await refetchCgsVestingSchedule()
     await refetchCgsVestedAndClaimableTokens()
