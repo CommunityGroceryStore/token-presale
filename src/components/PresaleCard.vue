@@ -341,21 +341,11 @@ const { address, isConnected } = useAccount()
 const chainId = useChainId()
 const { open } = useAppKit()
 const { writeContractAsync } = useWriteContract()
-const tokenContractAddress = import.meta.env.VITE_CGS_TOKEN_CONTRACT_ADDRESS as
-  | `0x${string}`
-  | undefined
-const vestingContractAddress = import.meta.env.VITE_CGS_VESTING_CONTRACT_ADDRESS as
-  | `0x${string}`
-  | undefined
-const presaleContractAddress = import.meta.env.VITE_CGS_PRESALE_CONTRACT_ADDRESS as
-  | `0x${string}`
-  | undefined
-const usdcContractAddress = import.meta.env.VITE_USDC_CONTRACT_ADDRESS as
-  | `0x${string}`
-  | undefined
-const usdtContractAddress = import.meta.env.VITE_USDT_CONTRACT_ADDRESS as
-  | `0x${string}`
-  | undefined
+const tokenContractAddress = import.meta.env.VITE_CGS_TOKEN_CONTRACT_ADDRESS as `0x${string}` | undefined
+const vestingContractAddress = import.meta.env.VITE_CGS_VESTING_CONTRACT_ADDRESS as `0x${string}` | undefined
+const presaleContractAddress = import.meta.env.VITE_CGS_PRESALE_CONTRACT_ADDRESS as `0x${string}` | undefined
+const usdcContractAddress = import.meta.env.VITE_USDC_CONTRACT_ADDRESS as `0x${string}` | undefined
+const usdtContractAddress = import.meta.env.VITE_USDT_CONTRACT_ADDRESS as `0x${string}` | undefined
 const feedbackMessage = ref<string | null>(null)
 const feedbackMessageTxHash = ref<string | null>(null)
 const selectedToken = ref('USDT')
