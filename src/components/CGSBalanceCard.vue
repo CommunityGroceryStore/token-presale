@@ -504,7 +504,7 @@ const {
   address: vestingContractAddress!,
   abi: cgsVestingAbi,
   functionName: 'vestingSchedules' as const,
-  args: [computed(() => address.value!)],
+  args: [ computed(() => address.value!) ],
   query: {
     enabled: computed(() => !!address.value && !!vestingContractAddress)
   }
