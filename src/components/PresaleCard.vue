@@ -319,7 +319,12 @@
 </style>
 <script lang="ts" setup>
 import { useAppKit } from '@reown/appkit/vue'
-import { useAccount, useChainId, useReadContract, useWriteContract } from '@wagmi/vue'
+import {
+  useAccount,
+  useChainId,
+  useReadContract,
+  useWriteContract
+} from '@wagmi/vue'
 import { mainnet } from '@wagmi/vue/chains'
 import { ArrowUpRight, LoaderCircle } from 'lucide-vue-next'
 import { computed, defineEmits, ref } from 'vue'
@@ -385,7 +390,7 @@ const {
   address: usdcContractAddress!,
   abi: erc20Abi,
   functionName: 'allowance' as const,
-  args: [ computed(() => address.value!), presaleContractAddress! ],
+  args: [computed(() => address.value!), presaleContractAddress!],
   query: {
     enabled: computed(
       () => !!address.value && !!usdcContractAddress && !!presaleContractAddress
@@ -403,12 +408,12 @@ const { refetch: refetchUsdtBalance } = useReadContract({
 })
 const {
   data: usdtPresaleContractAllowance,
-  refetch: refetchUsdtPresaleContractAllowance,
+  refetch: refetchUsdtPresaleContractAllowance
 } = useReadContract({
   address: usdtContractAddress!,
   abi: erc20Abi,
   functionName: 'allowance' as const,
-  args: [ computed(() => address.value!), presaleContractAddress! ],
+  args: [computed(() => address.value!), presaleContractAddress!],
   query: {
     enabled: computed(
       () => !!address.value && !!usdtContractAddress && !!presaleContractAddress
