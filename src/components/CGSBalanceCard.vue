@@ -479,10 +479,10 @@ const cgsTotalBalanceFormatted = computed(() => {
 
   return totalCgsBalance
     ? parseFloat(ethers.formatUnits(totalCgsBalance.toString(), 18))
-      .toLocaleString('en-US', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })
+        .toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
     : '0.00'
 })
 const isCgsVestingScheduleInitialized = computed(() => {
@@ -492,7 +492,7 @@ const { data: cgsBalance, refetch: refetchCgsBalance } = useReadContract({
   address: tokenContractAddress!,
   abi: erc20Abi,
   functionName: 'balanceOf' as const,
-  args: [computed(() => address.value!)],
+  args: [ computed(() => address.value!) ],
   query: {
     enabled: computed(() => !!address.value && !!tokenContractAddress)
   }
@@ -511,12 +511,12 @@ const {
 })
 const {
   data: cgsVestedAndClaimableTokens,
-  refetch: refetchCgsVestedAndClaimableTokens,
+  refetch: refetchCgsVestedAndClaimableTokens
 } = useReadContract({
   address: vestingContractAddress!,
   abi: cgsVestingAbi,
   functionName: 'getVestedAndClaimableTokens' as const,
-  args: [computed(() => address.value!)],
+  args: [ computed(() => address.value!) ],
   query: {
     enabled: computed(() => !!address.value && !!vestingContractAddress)
   }
@@ -555,7 +555,7 @@ const claim = async () => {
   }
   if (
     !cgsVestedAndClaimableTokens.value ||
-    cgsVestedAndClaimableTokens.value[1] <= 0n
+      cgsVestedAndClaimableTokens.value[1] <= 0n
   ) {
     console.error('No claimable tokens available')
     return
