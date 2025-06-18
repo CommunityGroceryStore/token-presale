@@ -86,21 +86,24 @@
             <p class="text-[16px] text-[#004322] font-normal mb-2">Claimable $CGS</p>
             <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-2 w-full">
               <p class="text-[18px] font-bold text-[#004322] text-left break-all max-w-full">
-          {{ cgsVestClaimableAmountFormatted }}
+                {{ cgsVestClaimableAmountFormatted }}
               </p>
               <Button
-          @click="isConnected ? claim() : open()"
-          class="w-fit !h-fit !px-[10px] !py-[5px] bg-[#004322] py-[5px] px-[10px] text-[#F9F8F4] text-[10px] hover:bg-green-800 rounded-[6px] cursor-pointer"
-          :class="isClaiming ? 'opacity-50 cursor-not-allowed' : ''"
+                @click="isConnected ? claim() : open()"
+                class="w-fit !h-fit !px-[10px] !py-[5px] bg-[#004322] py-[5px] px-[10px] text-[#F9F8F4] text-[10px] hover:bg-green-800 rounded-[6px] cursor-pointer"
+                :class="isClaiming ? 'opacity-50 cursor-not-allowed' : ''"
               >
-          <LoaderCircle v-if="isClaiming" class="animate-spin h-5 w-5 mr-2" />
-          {{
-            isConnected
-              ? hasTokensToClaim
-                ? `Claim`
-                : "No claim"
-              : "Connect Wallet"
-          }}
+                <LoaderCircle
+                  v-if="isClaiming"
+                  class="animate-spin h-5 w-5 mr-2"
+                />
+                {{
+                  isConnected
+                    ? hasTokensToClaim
+                      ? `Claim`
+                      : "No claim"
+                    : "Connect Wallet"
+                }}
               </Button>
             </div>
           </div>
