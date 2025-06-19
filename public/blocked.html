@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Access Restricted</title>
+</head>
+<body>
+  <h1>Access Restricted from Your Region</h1>
+  <p>If this is an error, click below to verify your access:</p>
+  <button id="override-btn">Verify and Continue</button>
+
+  <script>
+    document.getElementById('override-btn').onclick = () => {
+      document.cookie = "cf_country_override=true; path=/; max-age=86400";
+      window.location = "/";
+    };
+  </script>
+</body>
+</html>
