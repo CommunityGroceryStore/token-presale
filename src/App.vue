@@ -1,6 +1,6 @@
 <template>
-  <div class="flex min-h-screen">
-    <Main />
+  <div class="flex min-h-screen ">
+    <Main class="bg-[url('/images/indexbgimg.png')] bg-contain bg-bottom bg-no-repeat object-cover" />
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 import { networks } from '@/lib/wagmi/config'
 import Main from './components/Main.vue'
 
-const projectId = import.meta.env.REOWN_PROJECT_ID ?? ''
+const projectId = import.meta.env.VITE_REOWN_PROJECT_ID ?? ''
 
 // 2. Create a metadata object - optional
 const metadata = {
