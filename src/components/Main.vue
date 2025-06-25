@@ -630,7 +630,6 @@ import CGSBalanceCard from './CGSBalanceCard.vue'
 import PresaleCard from './PresaleCard.vue'
 import { Button } from '@/components/ui/button'
 import { abbreviateAddress } from '@/utils'
-import { a } from 'node_modules/@tanstack/vue-query/build/modern/queryClient-C8o7zS9z'
 
 const { address, isConnected } = useAccount()
 const { open } = useAppKit()
