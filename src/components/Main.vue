@@ -630,6 +630,7 @@ import CGSBalanceCard from './CGSBalanceCard.vue'
 import PresaleCard from './PresaleCard.vue'
 import { Button } from '@/components/ui/button'
 import { abbreviateAddress } from '@/utils'
+import { a } from 'node_modules/@tanstack/vue-query/build/modern/queryClient-C8o7zS9z'
 
 const { address, isConnected } = useAccount()
 const { open } = useAppKit()
@@ -652,9 +653,6 @@ const activeButton = ref('audits')
 
 const handleButtonClick = (type: string) => {
   activeButton.value = type
-  if (type !== 'audits') {
-    openLink(type)
-  }
 }
 const openLink = (type: string) => {
   const links: any = {
@@ -675,7 +673,8 @@ const openLink = (type: string) => {
     privacypolicy: 'https://www.communitygrocerystore.com/privacy-policy',
     termsconditions: 'https://www.communitygrocerystore.com/terms-and-conditions',
     fairlaunchpolicy: 'https://www.communitygrocerystore.com/fair-launch-policy',
-    presaleterms: 'https://www.communitygrocerystore.com/presale-disclaimer'
+    presaleterms: 'https://www.communitygrocerystore.com/presale-disclaimer',
+    audits: 'https://www.communitygrocerystore.com/community-grocery-store-smart-contract-kyc-audit'
   }
 
   const url: any = links[type.toLowerCase()]
