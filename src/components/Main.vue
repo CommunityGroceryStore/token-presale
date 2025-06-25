@@ -652,6 +652,7 @@ const activeButton = ref('audits')
 
 const handleButtonClick = (type: string) => {
   activeButton.value = type
+  openLink(type)
 }
 const openLink = (type: string) => {
   const links: any = {
